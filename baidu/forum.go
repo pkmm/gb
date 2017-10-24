@@ -24,15 +24,7 @@ const (
 	SIGN_URL = "http://c.tieba.baidu.com/c/c/forum/sign"
 )
 
-var BDUSS = "BMbUdsSkFwN3FSd1" +
-	"FSSWw0VDhRdlM5dWJOQk" +
-	"hEd0V2aEdPcVpDUFhxOEF" +
-	"naUZaSVFBQUFBJCQAAAAAAA" +
-	"AAAAEAAABS5n44vrLLvNSwN" +
-	"AAAAAAAAAAAAAAAAAAAAAAAA" +
-	"AAAAAAAAAAAAAAAAAAAAAAAAA" +
-	"AAAAAAAAAAAAAAAAAAAAAAAAAA" +
-	"AAD1-VgA9flYSH"
+var BDUSS = ""
 
 var client = &http.Client{}
 var cookie = http.Cookie{Name: "BDUSS", Value: BDUSS}
