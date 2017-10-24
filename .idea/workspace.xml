@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="14fda600-1b48-48be-9e3e-a04ba3f7c4ea" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gitHelp.bat" afterPath="$PROJECT_DIR$/gitHelp.bat" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -14,11 +13,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="main.go" pinned="false" current-in-tab="false">
+      <file leaf-file-name="main.go" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="23" column="15" lean-forward="false" selection-start-line="23" selection-start-column="15" selection-end-line="23" selection-end-column="15" />
+            <state relative-caret-position="165">
+              <caret line="11" column="13" lean-forward="true" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
               <folding>
                 <element signature="e#14#83#0" expanded="true" />
               </folding>
@@ -29,13 +28,17 @@
       <file leaf-file-name="mysqlUtil.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/storage/mysql/mysqlUtil.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+            <state relative-caret-position="225">
+              <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
               <folding>
-                <element signature="e#15#98#0" expanded="true" />
-                <marker date="1508835608491" expanded="true" signature="541:616" ph="SELECT kw, f... tiebas" />
-                <marker date="1508835608491" expanded="true" signature="1025:1100" ph="UPDATE tieba... " />
-                <marker date="1508835608491" expanded="true" signature="1343:1429" ph="insert into tiebas... " />
+                <marker date="1508850349834" expanded="false" signature="22:85" ph="..." />
+                <marker date="1508850349834" expanded="true" signature="441:824" ph="{...}" />
+                <marker date="1508850349834" expanded="true" signature="493:516" ph="{...}" />
+                <marker date="1508850349834" expanded="true" signature="661:684" ph="{...}" />
+                <marker date="1508850349834" expanded="true" signature="760:806" ph="{...}" />
+                <marker date="1508850349834" expanded="true" signature="878:1147" ph="{...}" />
+                <marker date="1508850349834" expanded="true" signature="930:953" ph="{...}" />
+                <marker date="1508850349834" expanded="true" signature="1265:1288" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -45,19 +48,53 @@
         <entry file="file://$PROJECT_DIR$/baidu/forum.go">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="330">
-              <caret line="34" column="30" lean-forward="false" selection-start-line="34" selection-start-column="30" selection-end-line="34" selection-end-column="30" />
+              <caret line="26" column="14" lean-forward="false" selection-start-line="26" selection-start-column="14" selection-end-line="26" selection-end-column="14" />
               <folding>
                 <element signature="e#15#153#0" expanded="true" />
+                <marker date="1508850349824" expanded="true" signature="552:581" ph="{...}" />
+                <marker date="1508850349824" expanded="true" signature="604:893" ph="{...}" />
+                <marker date="1508850349824" expanded="true" signature="830:880" ph="{...}" />
+                <marker date="1508850349824" expanded="true" signature="925:1375" ph="{...}" />
+                <marker date="1508850349824" expanded="true" signature="1114:1132" ph="{...}" />
+                <marker date="1508850349824" expanded="true" signature="1327:1345" ph="{...}" />
+                <marker date="1508850349824" expanded="true" signature="1404:1832" ph="{...}" />
+                <marker date="1508850349824" expanded="true" signature="1524:1528" ph="{...}" />
+                <marker date="1508850349824" expanded="true" signature="1740:1818" ph="{...}" />
+                <marker date="1508850349824" expanded="true" signature="1761:1778" ph="{...}" />
+                <marker date="1508850349824" expanded="true" signature="1876:3273" ph="{...}" />
+                <marker date="1508850349824" expanded="true" signature="1897:2279" ph="{...}" />
+                <marker date="1508850349824" expanded="true" signature="2353:2377" ph="{...}" />
+                <marker date="1508850349824" expanded="true" signature="2448:2539" ph="{...}" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="gitHelp.bat" pinned="false" current-in-tab="true">
+      <file leaf-file-name="gitHelp.bat" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gitHelp.bat">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="3" column="19" lean-forward="false" selection-start-line="3" selection-start-column="19" selection-end-line="3" selection-end-column="19" />
+            <state relative-caret-position="60">
+              <caret line="4" column="8" lean-forward="false" selection-start-line="4" selection-start-column="8" selection-end-line="4" selection-end-column="8" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="30">
+              <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="tieba.log" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tieba.log">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -72,7 +109,7 @@
       </list>
     </option>
   </component>
-  <component name="GOROOT" path="C:\Go" />
+  <component name="GOROOT" path="E:\Go" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -119,7 +156,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -131,6 +167,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scratches" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -182,10 +219,9 @@
     <option name="remove_strategy" value="false" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12846482" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1301059" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289689" sideWeight="0.5030257" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -217,6 +253,65 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/main.go">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="23" column="15" lean-forward="false" selection-start-line="23" selection-start-column="15" selection-end-line="23" selection-end-column="15" />
+          <folding>
+            <element signature="e#14#83#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/storage/mysql/mysqlUtil.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+          <folding>
+            <marker date="1508850349834" expanded="false" signature="22:85" ph="..." />
+            <marker date="1508850349834" expanded="true" signature="441:824" ph="{...}" />
+            <marker date="1508850349834" expanded="true" signature="493:516" ph="{...}" />
+            <marker date="1508850349834" expanded="true" signature="661:684" ph="{...}" />
+            <marker date="1508850349834" expanded="true" signature="760:806" ph="{...}" />
+            <marker date="1508850349834" expanded="true" signature="878:1147" ph="{...}" />
+            <marker date="1508850349834" expanded="true" signature="930:953" ph="{...}" />
+            <marker date="1508850349834" expanded="true" signature="1265:1288" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/baidu/forum.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="34" column="20" lean-forward="true" selection-start-line="34" selection-start-column="20" selection-end-line="34" selection-end-column="20" />
+          <folding>
+            <element signature="e#15#153#0" expanded="true" />
+            <marker date="1508850349824" expanded="true" signature="552:581" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="604:893" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="830:880" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="925:1375" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="1114:1132" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="1327:1345" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="1404:1832" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="1524:1528" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="1740:1818" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="1761:1778" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="1876:3273" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="1897:2279" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="2353:2377" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="2448:2539" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gitHelp.bat">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="19" lean-forward="false" selection-start-line="3" selection-start-column="19" selection-end-line="3" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.go">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
           <caret line="23" column="15" lean-forward="false" selection-start-line="23" selection-start-column="15" selection-end-line="23" selection-end-column="15" />
           <folding>
@@ -230,10 +325,14 @@
         <state relative-caret-position="270">
           <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
           <folding>
-            <element signature="e#15#98#0" expanded="true" />
-            <marker date="1508835608491" expanded="true" signature="541:616" ph="SELECT kw, f... tiebas" />
-            <marker date="1508835608491" expanded="true" signature="1025:1100" ph="UPDATE tieba... " />
-            <marker date="1508835608491" expanded="true" signature="1343:1429" ph="insert into tiebas... " />
+            <marker date="1508850349834" expanded="false" signature="22:85" ph="..." />
+            <marker date="1508850349834" expanded="true" signature="441:824" ph="{...}" />
+            <marker date="1508850349834" expanded="true" signature="493:516" ph="{...}" />
+            <marker date="1508850349834" expanded="true" signature="661:684" ph="{...}" />
+            <marker date="1508850349834" expanded="true" signature="760:806" ph="{...}" />
+            <marker date="1508850349834" expanded="true" signature="878:1147" ph="{...}" />
+            <marker date="1508850349834" expanded="true" signature="930:953" ph="{...}" />
+            <marker date="1508850349834" expanded="true" signature="1265:1288" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -244,6 +343,20 @@
           <caret line="34" column="30" lean-forward="true" selection-start-line="34" selection-start-column="30" selection-end-line="34" selection-end-column="30" />
           <folding>
             <element signature="e#15#153#0" expanded="true" />
+            <marker date="1508850349824" expanded="true" signature="552:581" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="604:893" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="830:880" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="925:1375" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="1114:1132" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="1327:1345" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="1404:1832" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="1524:1528" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="1740:1818" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="1761:1778" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="1876:3273" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="1897:2279" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="2353:2377" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="2448:2539" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -271,10 +384,14 @@
         <state relative-caret-position="780">
           <caret line="52" column="24" lean-forward="false" selection-start-line="52" selection-start-column="24" selection-end-line="52" selection-end-column="24" />
           <folding>
-            <element signature="e#15#98#0" expanded="true" />
-            <marker date="1508835608491" expanded="true" signature="541:616" ph="SELECT kw, f... tiebas" />
-            <marker date="1508835608491" expanded="true" signature="1025:1100" ph="UPDATE tieba... " />
-            <marker date="1508835608491" expanded="true" signature="1343:1429" ph="insert into tiebas... " />
+            <marker date="1508850349834" expanded="false" signature="22:85" ph="..." />
+            <marker date="1508850349834" expanded="true" signature="441:824" ph="{...}" />
+            <marker date="1508850349834" expanded="true" signature="493:516" ph="{...}" />
+            <marker date="1508850349834" expanded="true" signature="661:684" ph="{...}" />
+            <marker date="1508850349834" expanded="true" signature="760:806" ph="{...}" />
+            <marker date="1508850349834" expanded="true" signature="878:1147" ph="{...}" />
+            <marker date="1508850349834" expanded="true" signature="930:953" ph="{...}" />
+            <marker date="1508850349834" expanded="true" signature="1265:1288" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -285,6 +402,20 @@
           <caret line="142" column="22" lean-forward="false" selection-start-line="142" selection-start-column="22" selection-end-line="142" selection-end-column="22" />
           <folding>
             <element signature="e#15#153#0" expanded="true" />
+            <marker date="1508850349824" expanded="true" signature="552:581" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="604:893" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="830:880" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="925:1375" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="1114:1132" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="1327:1345" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="1404:1832" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="1524:1528" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="1740:1818" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="1761:1778" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="1876:3273" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="1897:2279" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="2353:2377" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="2448:2539" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -304,10 +435,14 @@
         <state relative-caret-position="705">
           <caret line="52" column="24" lean-forward="true" selection-start-line="52" selection-start-column="24" selection-end-line="52" selection-end-column="24" />
           <folding>
-            <element signature="e#15#98#0" expanded="true" />
-            <marker date="1508835608491" expanded="true" signature="541:616" ph="SELECT kw, f... tiebas" />
-            <marker date="1508835608491" expanded="true" signature="1025:1100" ph="UPDATE tieba... " />
-            <marker date="1508835608491" expanded="true" signature="1343:1429" ph="insert into tiebas... " />
+            <marker date="1508850349834" expanded="false" signature="22:85" ph="..." />
+            <marker date="1508850349834" expanded="true" signature="441:824" ph="{...}" />
+            <marker date="1508850349834" expanded="true" signature="493:516" ph="{...}" />
+            <marker date="1508850349834" expanded="true" signature="661:684" ph="{...}" />
+            <marker date="1508850349834" expanded="true" signature="760:806" ph="{...}" />
+            <marker date="1508850349834" expanded="true" signature="878:1147" ph="{...}" />
+            <marker date="1508850349834" expanded="true" signature="930:953" ph="{...}" />
+            <marker date="1508850349834" expanded="true" signature="1265:1288" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -318,6 +453,20 @@
           <caret line="142" column="22" lean-forward="true" selection-start-line="142" selection-start-column="22" selection-end-line="142" selection-end-column="22" />
           <folding>
             <element signature="e#15#153#0" expanded="true" />
+            <marker date="1508850349824" expanded="true" signature="552:581" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="604:893" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="830:880" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="925:1375" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="1114:1132" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="1327:1345" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="1404:1832" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="1524:1528" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="1740:1818" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="1761:1778" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="1876:3273" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="1897:2279" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="2353:2377" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="2448:2539" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -337,10 +486,14 @@
         <state relative-caret-position="30">
           <caret line="2" column="21" lean-forward="false" selection-start-line="2" selection-start-column="21" selection-end-line="2" selection-end-column="21" />
           <folding>
-            <element signature="e#15#98#0" expanded="true" />
-            <marker date="1508835608491" expanded="true" signature="541:616" ph="SELECT kw, f... tiebas" />
-            <marker date="1508835608491" expanded="true" signature="1025:1100" ph="UPDATE tieba... " />
-            <marker date="1508835608491" expanded="true" signature="1343:1429" ph="insert into tiebas... " />
+            <marker date="1508850349834" expanded="false" signature="22:85" ph="..." />
+            <marker date="1508850349834" expanded="true" signature="441:824" ph="{...}" />
+            <marker date="1508850349834" expanded="true" signature="493:516" ph="{...}" />
+            <marker date="1508850349834" expanded="true" signature="661:684" ph="{...}" />
+            <marker date="1508850349834" expanded="true" signature="760:806" ph="{...}" />
+            <marker date="1508850349834" expanded="true" signature="878:1147" ph="{...}" />
+            <marker date="1508850349834" expanded="true" signature="930:953" ph="{...}" />
+            <marker date="1508850349834" expanded="true" signature="1265:1288" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -360,10 +513,14 @@
         <state relative-caret-position="30">
           <caret line="2" column="6" lean-forward="false" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
           <folding>
-            <element signature="e#15#98#0" expanded="true" />
-            <marker date="1508835608491" expanded="true" signature="541:616" ph="SELECT kw, f... tiebas" />
-            <marker date="1508835608491" expanded="true" signature="1025:1100" ph="UPDATE tieba... " />
-            <marker date="1508835608491" expanded="true" signature="1343:1429" ph="insert into tiebas... " />
+            <marker date="1508850349834" expanded="false" signature="22:85" ph="..." />
+            <marker date="1508850349834" expanded="true" signature="441:824" ph="{...}" />
+            <marker date="1508850349834" expanded="true" signature="493:516" ph="{...}" />
+            <marker date="1508850349834" expanded="true" signature="661:684" ph="{...}" />
+            <marker date="1508850349834" expanded="true" signature="760:806" ph="{...}" />
+            <marker date="1508850349834" expanded="true" signature="878:1147" ph="{...}" />
+            <marker date="1508850349834" expanded="true" signature="930:953" ph="{...}" />
+            <marker date="1508850349834" expanded="true" signature="1265:1288" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -388,32 +545,19 @@
     <entry file="file://$PROJECT_DIR$/storage/mysqlHelper.go" />
     <entry file="file://$PROJECT_DIR$/storage/mysqlUtil.go" />
     <entry file="file://$PROJECT_DIR$/storage/redisUtil.go" />
-    <entry file="file://$PROJECT_DIR$/main.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="23" column="15" lean-forward="false" selection-start-line="23" selection-start-column="15" selection-end-line="23" selection-end-column="15" />
-          <folding>
-            <element signature="e#14#83#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tieba.log">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/storage/mysql/mysqlUtil.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+        <state relative-caret-position="225">
+          <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
           <folding>
-            <element signature="e#15#98#0" expanded="true" />
-            <marker date="1508835608491" expanded="true" signature="541:616" ph="SELECT kw, f... tiebas" />
-            <marker date="1508835608491" expanded="true" signature="1025:1100" ph="UPDATE tieba... " />
-            <marker date="1508835608491" expanded="true" signature="1343:1429" ph="insert into tiebas... " />
+            <marker date="1508850349834" expanded="false" signature="22:85" ph="..." />
+            <marker date="1508850349834" expanded="true" signature="441:824" ph="{...}" />
+            <marker date="1508850349834" expanded="true" signature="493:516" ph="{...}" />
+            <marker date="1508850349834" expanded="true" signature="661:684" ph="{...}" />
+            <marker date="1508850349834" expanded="true" signature="760:806" ph="{...}" />
+            <marker date="1508850349834" expanded="true" signature="878:1147" ph="{...}" />
+            <marker date="1508850349834" expanded="true" signature="930:953" ph="{...}" />
+            <marker date="1508850349834" expanded="true" signature="1265:1288" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -421,18 +565,58 @@
     <entry file="file://$PROJECT_DIR$/baidu/forum.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="330">
-          <caret line="34" column="30" lean-forward="false" selection-start-line="34" selection-start-column="30" selection-end-line="34" selection-end-column="30" />
+          <caret line="26" column="14" lean-forward="false" selection-start-line="26" selection-start-column="14" selection-end-line="26" selection-end-column="14" />
           <folding>
             <element signature="e#15#153#0" expanded="true" />
+            <marker date="1508850349824" expanded="true" signature="552:581" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="604:893" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="830:880" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="925:1375" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="1114:1132" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="1327:1345" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="1404:1832" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="1524:1528" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="1740:1818" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="1761:1778" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="1876:3273" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="1897:2279" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="2353:2377" ph="{...}" />
+            <marker date="1508850349824" expanded="true" signature="2448:2539" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/gitHelp.bat">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="19" lean-forward="false" selection-start-line="3" selection-start-column="19" selection-end-line="3" selection-end-column="19" />
+        <state relative-caret-position="60">
+          <caret line="4" column="8" lean-forward="false" selection-start-line="4" selection-start-column="8" selection-end-line="4" selection-end-column="8" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tieba.log">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="13" lean-forward="true" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+          <folding>
+            <element signature="e#14#83#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
