@@ -24,13 +24,10 @@ const (
 	SIGN_URL = "http://c.tieba.baidu.com/c/c/forum/sign"
 )
 
-var BDUSS = ""
-
 var client = &http.Client{}
-var cookie = http.Cookie{Name: "BDUSS", Value: BDUSS}
 
-
-func GetTbs() string {
+func GetTbs(bduss string) string {
+	cookie := http.Cookie{Name: "BDUSS", Value: bduss}
 	req, _ := http.NewRequest("GET", TBS_URL, nil)
 	req.AddCookie(&cookie)
 	rep, err := client.Do(req)
@@ -47,7 +44,8 @@ func GetTbs() string {
 	return ""
 }
 
-func GetFid(kw string) string {
+func GetFid(kw, bduss string) string {
+	cookie := http.Cookie{Name: "BDUSS", Value: bduss}
 	args := url.Values{}
 	args.Add("kw", kw)
 	request, _ := http.NewRequest("GET", FID_URL+"?"+args.Encode(), nil)
@@ -66,7 +64,8 @@ func GetFid(kw string) string {
 	return string(submatch[1])
 }
 
-func GetAllstar() []string {
+func GetAllstar(bduss string) []string {
+	cookie := http.Cookie{Name: "BDUSS", Value: bduss}
 	req, _ := http.NewRequest("GET", I_LIKE_URL, nil)
 	req.AddCookie(&cookie)
 	rep, err := client.Do(req)
@@ -86,9 +85,10 @@ func GetAllstar() []string {
 	return ret
 }
 
-func Sign(kw, fid string, ch chan string) {
+func Sign(kw, fid, bduss string, ch chan string) {
+	cookie := http.Cookie{Name: "BDUSS", Value: bduss}
 	data := url.Values{
-		"BDUSS":           {BDUSS},
+		"BDUSS":           {bduss},
 		"_client_id":      {"03-00-DA-59-05-00-72-96-06-00-01-00-04-00-4C-43-01-00-34-F4-02-00-BC-25-09-00-4E-36"},
 		"_client_type":    {"4"},
 		"_client_version": {"1.2.1.17"},
@@ -96,7 +96,7 @@ func Sign(kw, fid string, ch chan string) {
 		"fid":             {fid},
 		"kw":              {kw},
 		"net_type":        {"3"},
-		"tbs":             {GetTbs()},
+		"tbs":             {GetTbs(bduss)},
 	}
 	var keys = make([]string, len(data))
 	var i = 0
