@@ -56,7 +56,7 @@ func SyncFromOffical(current *map[string]string, userId string) {
 		Log.Println(err)
 	}
 	for kw, fid := range *current {
-		_, err := db.Exec("insert into tiebas (kw, fid, user_id) values (?,?,?) ON DUPLICATE KEY UPDATE fid = fid;", kw, fid, userId)
+		_, err := db.Exec("insert into tiebas (kw, fid, user_id) values (?,?,?) ON DUPLICATE KEY UPDATE kw = kw;", kw, fid, userId)
 		if err != nil {
 			Log.Println(err)
 		}
