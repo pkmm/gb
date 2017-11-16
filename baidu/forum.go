@@ -24,6 +24,45 @@ const (
 	SIGN_URL = "http://c.tieba.baidu.com/c/c/forum/sign"
 )
 
+const (
+	GET  = "GET"
+	POST = "POST"
+)
+
+type ForumWorker struct {
+	Cookie http.Cookie
+	Client *http.Client
+}
+
+type Tbs struct {
+	Tbs string
+}
+
+// 构造函数
+func NewForunWorker(bduss string) *ForumWorker {
+	return &ForumWorker{Cookie: http.Cookie{Name: "BDUSS", Value: bduss}, Client: &http.Client{}}
+}
+
+// 配置请求的客户端
+func (f ForumWorker) InitForumWorker() {
+
+}
+
+// 获取tbs
+func (f ForumWorker) GetTbs() string {
+	r, _ := http.NewRequest(GET, TBS_URL, nil)
+	r.AddCookie(&f.Cookie)
+	resp, err := f.Client.Do(r)
+	if err!=nil {
+		return ""
+	}
+	body,_:=ioutil.ReadAll(resp.Body)
+	defer resp.Body.Close()
+	var tbs = Tbs{}
+	json.Unmarshal(body, &tbs)
+	return tbs.Tbs
+}
+
 var BDUSS = ""
 
 var client = &http.Client{}

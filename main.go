@@ -4,6 +4,7 @@ import (
 	B "Baidu/baidu"
 	mysqlHelper "Baidu/storage/mysql"
 	"fmt"
+	"pkmm/utils/baidu"
 )
 
 func getFid(kw string, ch chan string) {
@@ -51,6 +52,12 @@ func SignByUserId(userId string) {
 }
 
 func main() {
-	SyncByUserId("1")
-	SignByUserId("1")
+	t := baidu.NewForunWorker("01T1AyRG1XY28ydTRNbVFTbmQzM1pwOXVMbnk2cWo3ODV1eFh6bW1DWXZvUjVhTVFBQUFBJCQAAAAAAAAAAAEAAABS5n44vrLLvNSwNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC8U91kvFPdZcW")
+	//fmt.Println(t.GetTbs())
+	//fmt.Println(t.GetFid("浙江中医药大学"))
+	//fmt.Println(t.GetAllForums())
+	data := baidu.ForumList{}
+	data = append(data, baidu.Forum{"acm", t.GetFid("acm")})
+
+	fmt.Println(*t.SignAll(&data))
 }
