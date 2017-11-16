@@ -56,7 +56,7 @@ type Forum struct {
 type ForumList []Forum
 
 // 构造函数
-func NewForunWorker(bduss string) *ForumWorker {
+func NewForumWorker(bduss string) *ForumWorker {
 	return &ForumWorker{
 		Cookie: http.Cookie{Name: "BDUSS",
 			Value: bduss}, Client: &http.Client{},

@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	worker := baidu.NewForunWorker("your baidu bduss")
+	worker := baidu.NewForumWorker("your baidu bduss")
 	data:= baidu.ForumList{}
 	data = append(data, baidu.Forum{"贴吧名称", "贴吧fid"})
 	ret := worker.SignAll(&data)
