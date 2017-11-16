@@ -126,7 +126,7 @@ func (f ForumWorker) GetAllForums() []string {
 }
 
 // 签到一个贴吧
-func (f ForumWorker) SignOne(kw, fid string, ch chan string) {
+func (f ForumWorker) signOne(kw, fid string, ch chan string) {
 	formDatas := url.Values{
 		"BDUSS":           {f.Bduss},
 		"_client_id":      {"03-00-DA-59-05-00-72-96-06-00-01-00-04-00-4C-43-01-00-34-F4-02-00-BC-25-09-00-4E-36"},
@@ -183,7 +183,7 @@ func (f ForumWorker) SignAll(needSignForums *ForumList) *map[string]string {
 	size := len(*needSignForums)
 	localChannel := make(chan string, size<<1)
 	for _, forum := range *needSignForums {
-		go f.SignOne(forum.Kw, forum.Fid, localChannel)
+		go f.signOne(forum.Kw, forum.Fid, localChannel)
 	}
 	result := make(map[string]string, size)
 	for i := 0; i < size; i++ {
