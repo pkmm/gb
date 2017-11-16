@@ -24,7 +24,6 @@ const (
 	SIGN_URL = "http://c.tieba.baidu.com/c/c/forum/sign"
 )
 
-<<<<<<< HEAD
 const (
 	GET  = "GET"
 	POST = "POST"
@@ -33,15 +32,35 @@ const (
 type ForumWorker struct {
 	Cookie http.Cookie
 	Client *http.Client
+	Bduss  string
 }
 
 type Tbs struct {
 	Tbs string
 }
 
+// 解析使用, 本文件暂时没有解析
+type SignReply struct {
+	Error_code string
+	Error_msg  string
+	Info       []string
+	Error      map[string]string
+	User_info  map[string]string
+}
+
+// 签到的forum的样子， 只需要2个标志
+type Forum struct {
+	Kw, Fid string
+}
+
+type ForumList []Forum
+
 // 构造函数
 func NewForunWorker(bduss string) *ForumWorker {
-	return &ForumWorker{Cookie: http.Cookie{Name: "BDUSS", Value: bduss}, Client: &http.Client{}}
+	return &ForumWorker{
+		Cookie: http.Cookie{Name: "BDUSS",
+			Value: bduss}, Client: &http.Client{},
+		Bduss:                     bduss}
 }
 
 // 配置请求的客户端
@@ -54,52 +73,28 @@ func (f ForumWorker) GetTbs() string {
 	r, _ := http.NewRequest(GET, TBS_URL, nil)
 	r.AddCookie(&f.Cookie)
 	resp, err := f.Client.Do(r)
-	if err!=nil {
+	if err != nil {
 		return ""
 	}
-	body,_:=ioutil.ReadAll(resp.Body)
+	body, _ := ioutil.ReadAll(resp.Body)
 	defer resp.Body.Close()
 	var tbs = Tbs{}
 	json.Unmarshal(body, &tbs)
 	return tbs.Tbs
 }
 
-var BDUSS = ""
-
-=======
->>>>>>> 0a0521446b31b34457598c8c4f05123d4e303ca4
-var client = &http.Client{}
-
-func GetTbs(bduss string) string {
-	cookie := http.Cookie{Name: "BDUSS", Value: bduss}
-	req, _ := http.NewRequest("GET", TBS_URL, nil)
-	req.AddCookie(&cookie)
-	rep, err := client.Do(req)
-	data, _ := ioutil.ReadAll(rep.Body)
-	defer rep.Body.Close()
-	type TBS struct {
-		Tbs string
-	}
-	var tbs TBS
-	if err == nil {
-		json.Unmarshal(data, &tbs)
-		return tbs.Tbs
-	}
-	return ""
-}
-
-func GetFid(kw, bduss string) string {
-	cookie := http.Cookie{Name: "BDUSS", Value: bduss}
+// 获取fid
+func (f ForumWorker) GetFid(kw string) string {
 	args := url.Values{}
 	args.Add("kw", kw)
-	request, _ := http.NewRequest("GET", FID_URL+"?"+args.Encode(), nil)
-	request.AddCookie(&cookie)
-	rep, err := client.Do(request)
+	r, _ := http.NewRequest(GET, FID_URL+"?"+args.Encode(), nil)
+	r.AddCookie(&f.Cookie)
+	reply, err := f.Client.Do(r)
 	if err != nil {
 		return "-1"
 	}
-	defer rep.Body.Close()
-	data, _ := ioutil.ReadAll(rep.Body)
+	defer reply.Body.Close()
+	data, _ := ioutil.ReadAll(reply.Body)
 	re, _ := regexp.Compile(`<input type="hidden" name="fid" value="(.*?)"/>`)
 	submatch := re.FindSubmatch(data)
 	if len(submatch) < 2 {
@@ -108,15 +103,16 @@ func GetFid(kw, bduss string) string {
 	return string(submatch[1])
 }
 
-func GetAllstar(bduss string) []string {
-	cookie := http.Cookie{Name: "BDUSS", Value: bduss}
-	req, _ := http.NewRequest("GET", I_LIKE_URL, nil)
-	req.AddCookie(&cookie)
-	rep, err := client.Do(req)
+// 获取关注的所有的贴儿吧
+func (f ForumWorker) GetAllForums() []string {
+	r, _ := http.NewRequest(GET, I_LIKE_URL, nil)
+	r.AddCookie(&f.Cookie)
+	reply, err := f.Client.Do(r)
 	if err != nil {
+		return []string{}
 	}
-	defer rep.Body.Close()
-	data, _ := ioutil.ReadAll(rep.Body)
+	defer reply.Body.Close()
+	data, _ := ioutil.ReadAll(reply.Body)
 	re, _ := regexp.Compile(`<a href=".*?kw=.*?">(.*?)</a>`)
 	submatch := re.FindAllSubmatch(data, -1)
 	ret := []string{}
@@ -129,10 +125,10 @@ func GetAllstar(bduss string) []string {
 	return ret
 }
 
-func Sign(kw, fid, bduss string, ch chan string) {
-	cookie := http.Cookie{Name: "BDUSS", Value: bduss}
-	data := url.Values{
-		"BDUSS":           {bduss},
+// 签到一个贴吧
+func (f ForumWorker) SignOne(kw, fid string, ch chan string) {
+	formDatas := url.Values{
+		"BDUSS":           {f.Bduss},
 		"_client_id":      {"03-00-DA-59-05-00-72-96-06-00-01-00-04-00-4C-43-01-00-34-F4-02-00-BC-25-09-00-4E-36"},
 		"_client_type":    {"4"},
 		"_client_version": {"1.2.1.17"},
@@ -140,11 +136,29 @@ func Sign(kw, fid, bduss string, ch chan string) {
 		"fid":             {fid},
 		"kw":              {kw},
 		"net_type":        {"3"},
-		"tbs":             {GetTbs(bduss)},
+		"tbs":             {f.GetTbs()},
 	}
-	var keys = make([]string, len(data))
+	formDatas = f.encrypt(formDatas)
+	r, _ := http.NewRequest("POST", SIGN_URL, strings.NewReader(formDatas.Encode()))
+	r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	r.Header.Add("User-Agent", "Pkmm iPhone/1.0 BadApple/99.1")
+	r.AddCookie(&f.Cookie)
+	resp, _ := f.Client.Do(r)
+	defer resp.Body.Close()
+	body, _ := ioutil.ReadAll(resp.Body)
+	//reply := SignReply{}
+	//json.Unmarshal(body, &reply)
+
+	//fmt.Println(reply)
+	ch <- kw
+	ch <- string(body)
+}
+
+// 规格化上传的数据
+func (f ForumWorker) encrypt(formDatas url.Values) url.Values {
+	var keys = make([]string, len(formDatas))
 	var i = 0
-	for k, _ := range data {
+	for k, _ := range formDatas {
 		keys[i] = k
 		i++
 	}
@@ -153,30 +167,139 @@ func Sign(kw, fid, bduss string, ch chan string) {
 	for _, k := range keys {
 		enerypt.WriteString(k)
 		enerypt.WriteString("=")
-		enerypt.WriteString(data.Get(k))
+		enerypt.WriteString(formDatas.Get(k))
 	}
 	enerypt.WriteString("tiebaclient!!!")
-	tt := md5.New()
-	tt.Write(enerypt.Bytes())
-	sign := hex.EncodeToString(tt.Sum(nil))
+	md5value := md5.New()
+	md5value.Write(enerypt.Bytes())
+	sign := hex.EncodeToString(md5value.Sum(nil))
 	sign = strings.ToUpper(sign)
-	data.Set("sign", sign)
-	req, _ := http.NewRequest("POST", SIGN_URL, strings.NewReader(data.Encode()))
-	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-	req.Header.Add("User-Agent", "Pkmm iPhone/1.0 BadApple/99.1")
-	req.AddCookie(&cookie)
-	rep, _ := client.Do(req)
-	defer rep.Body.Close()
-	html, _ := ioutil.ReadAll(rep.Body)
-	fmt.Println(string(html))
-	type ResponseJson struct {
-		Error_code string
-		Error_msg  string
-		Info       []string
-		Error      map[string]string
-	}
-	ret := ResponseJson{}
-	json.Unmarshal(html, &ret)
-	ch <- string(html)
-	ch <- kw
+	formDatas.Set("sign", sign)
+	return formDatas
 }
+
+// 签到所有贴吧，使用goroutines
+func (f ForumWorker) SignAll(needSignForums *ForumList) *map[string]string {
+	size := len(*needSignForums)
+	localChannel := make(chan string, size<<1)
+	for _, forum := range *needSignForums {
+		go f.SignOne(forum.Kw, forum.Fid, localChannel)
+	}
+	result := make(map[string]string, size)
+	for i := 0; i < size; i++ {
+		kw := <-localChannel
+		signResult := <-localChannel
+		result[kw] = signResult
+		fmt.Println(signResult)
+	}
+	return &result
+}
+
+// many days ago
+
+//var BDUSS = ""
+//var client = &http.Client{}
+//var cookie = http.Cookie{Name: "BDUSS", Value: BDUSS}
+//func GetTbs() string {
+//	req, _ := http.NewRequest("GET", TBS_URL, nil)
+//	req.AddCookie(&cookie)
+//	rep, err := client.Do(req)
+//	data, _ := ioutil.ReadAll(rep.Body)
+//	defer rep.Body.Close()
+//	type TBS struct {
+//		Tbs string
+//	}
+//	var tbs TBS
+//	if err == nil {
+//		json.Unmarshal(data, &tbs)
+//		return tbs.Tbs
+//	}
+//	return ""
+//}
+//func GetFid(kw string) string {
+//	args := url.Values{}
+//	args.Add("kw", kw)
+//	request, _ := http.NewRequest("GET", FID_URL+"?"+args.Encode(), nil)
+//	request.AddCookie(&cookie)
+//	rep, err := client.Do(request)
+//	if err != nil {
+//		return "-1"
+//	}
+//	defer rep.Body.Close()
+//	data, _ := ioutil.ReadAll(rep.Body)
+//	re, _ := regexp.Compile(`<input type="hidden" name="fid" value="(.*?)"/>`)
+//	submatch := re.FindSubmatch(data)
+//	if len(submatch) < 2 {
+//		return "-1"
+//	}
+//	return string(submatch[1])
+//}
+//func GetAllstar() []string {
+//	req, _ := http.NewRequest("GET", I_LIKE_URL, nil)
+//	req.AddCookie(&cookie)
+//	rep, err := client.Do(req)
+//	if err != nil {
+//	}
+//	defer rep.Body.Close()
+//	data, _ := ioutil.ReadAll(rep.Body)
+//	re, _ := regexp.Compile(`<a href=".*?kw=.*?">(.*?)</a>`)
+//	submatch := re.FindAllSubmatch(data, -1)
+//	ret := []string{}
+//	for _, name := range submatch {
+//		if len(name) < 2 {
+//			continue
+//		}
+//		ret = append(ret, string(name[1]))
+//	}
+//	return ret
+//}
+//func Sign(kw, fid string, ch chan string) {
+//	data := url.Values{
+//		"BDUSS":           {BDUSS},
+//		"_client_id":      {"03-00-DA-59-05-00-72-96-06-00-01-00-04-00-4C-43-01-00-34-F4-02-00-BC-25-09-00-4E-36"},
+//		"_client_type":    {"4"},
+//		"_client_version": {"1.2.1.17"},
+//		"_phone_imei":     {"540b43b59d21b7a4824e1fd31b08e9a6"},
+//		"fid":             {fid},
+//		"kw":              {kw},
+//		"net_type":        {"3"},
+//		"tbs":             {GetTbs()},
+//	}
+//	var keys = make([]string, len(data))
+//	var i = 0
+//	for k, _ := range data {
+//		keys[i] = k
+//		i++
+//	}
+//	sort.Strings(keys)
+//	var enerypt bytes.Buffer
+//	for _, k := range keys {
+//		enerypt.WriteString(k)
+//		enerypt.WriteString("=")
+//		enerypt.WriteString(data.Get(k))
+//	}
+//	enerypt.WriteString("tiebaclient!!!")
+//	tt := md5.New()
+//	tt.Write(enerypt.Bytes())
+//	sign := hex.EncodeToString(tt.Sum(nil))
+//	sign = strings.ToUpper(sign)
+//	data.Set("sign", sign)
+//	req, _ := http.NewRequest("POST", SIGN_URL, strings.NewReader(data.Encode()))
+//	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+//	req.Header.Add("User-Agent", "Pkmm iPhone/1.0 BadApple/99.1")
+//	req.AddCookie(&cookie)
+//	rep, _ := client.Do(req)
+//	defer rep.Body.Close()
+//	html, _ := ioutil.ReadAll(rep.Body)
+//	fmt.Println(string(html))
+//	type ResponseJson struct {
+//		Error_code string
+//		Error_msg  string
+//		Info       []string
+//		Error      map[string]string
+//	}
+//	ret := ResponseJson{}
+//	json.Unmarshal(html, &ret)
+//	ch <- string(html)
+//	ch <- kw
+//}
