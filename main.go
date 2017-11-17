@@ -1,7 +1,7 @@
 package main
 
 import (
-	"Baidu/baidu"
+	"github.com/pkmm/gb/baidu"
 	"fmt"
 )
 
