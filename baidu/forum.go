@@ -36,15 +36,6 @@ type Tbs struct {
 	Tbs string
 }
 
-// 解析使用, 本文件暂时没有解析
-type SignReply struct {
-	Error_code string
-	Error_msg  string
-	Info       []string
-	Error      map[string]string
-	User_info  map[string]string
-}
-
 // 签到的forum的样子， 只需要2个标志
 type Forum struct {
 	Kw, Fid string
@@ -140,10 +131,7 @@ func (f ForumWorker) signOne(kw, fid string, ch chan string) {
 	resp, _ := f.Client.Do(r)
 	defer resp.Body.Close()
 	body, _ := ioutil.ReadAll(resp.Body)
-	//reply := SignReply{}
-	//json.Unmarshal(body, &reply)
 
-	//fmt.Println(reply)
 	ch <- kw
 	ch <- string(body)
 }
@@ -152,20 +140,18 @@ func (f ForumWorker) signOne(kw, fid string, ch chan string) {
 func (f ForumWorker) encrypt(formData url.Values) url.Values {
 	var keys = make([]string, len(formData))
 	var i = 0
-	for k, _ := range formData {
+	for k := range formData {
 		keys[i] = k
 		i++
 	}
 	sort.Strings(keys)
-	var enerypt bytes.Buffer
+	var encrypts bytes.Buffer
 	for _, k := range keys {
-		enerypt.WriteString(k)
-		enerypt.WriteString("=")
-		enerypt.WriteString(formData.Get(k))
+		encrypts.WriteString(k + "=" + formData.Get(k))
 	}
-	enerypt.WriteString("tiebaclient!!!")
+	encrypts.WriteString("tiebaclient!!!")
 	md5value := md5.New()
-	md5value.Write(enerypt.Bytes())
+	md5value.Write(encrypts.Bytes())
 	sign := hex.EncodeToString(md5value.Sum(nil))
 	sign = strings.ToUpper(sign)
 	formData.Set("sign", sign)
