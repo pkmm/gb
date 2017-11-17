@@ -1,2 +1,2 @@
-# gb
-Learn golang
+Baidu forum automatic check-in with golang implementation
+============================
