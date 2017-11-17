@@ -17,11 +17,8 @@ import (
 const (
 	TBSURL   = "http://tieba.baidu.com/dc/common/tbs"
 	FIDURL   = "http://tieba.baidu.com/mo/m"
-	ILIKEURL = "http://tieba.baidu.com/mo/q-0-" +
-		"-49BB6FC27D7013BD795602B74B2E83E2%3" +
-		"AFG%3D1--1-1-0----wapp_1462281637540_9" +
-		"23/m?tn=bdFBW&tab=favorite"
-	SIGNURL = "http://c.tieba.baidu.com/c/c/forum/sign"
+	ILIKEURL = "http://tieba.baidu.com/mo/q-0--49BB6FC27D7013BD795602B74B2E83E2%3AFG%3D1--1-1-0----wapp_1462281637540_923/m?tn=bdFBW&tab=favorite"
+	SIGNURL  = "http://c.tieba.baidu.com/c/c/forum/sign"
 )
 
 const (
