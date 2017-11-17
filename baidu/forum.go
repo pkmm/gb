@@ -15,13 +15,13 @@ import (
 )
 
 const (
-	TBS_URL    = "http://tieba.baidu.com/dc/common/tbs"
-	FID_URL    = "http://tieba.baidu.com/mo/m"
-	I_LIKE_URL = "http://tieba.baidu.com/mo/q-0-" +
+	TBSURL   = "http://tieba.baidu.com/dc/common/tbs"
+	FIDURL   = "http://tieba.baidu.com/mo/m"
+	ILIKEURL = "http://tieba.baidu.com/mo/q-0-" +
 		"-49BB6FC27D7013BD795602B74B2E83E2%3" +
 		"AFG%3D1--1-1-0----wapp_1462281637540_9" +
 		"23/m?tn=bdFBW&tab=favorite"
-	SIGN_URL = "http://c.tieba.baidu.com/c/c/forum/sign"
+	SIGNURL = "http://c.tieba.baidu.com/c/c/forum/sign"
 )
 
 const (
@@ -57,10 +57,7 @@ type ForumList []Forum
 
 // 构造函数
 func NewForumWorker(bduss string) *ForumWorker {
-	return &ForumWorker{
-		Cookie: http.Cookie{Name: "BDUSS",
-			Value: bduss}, Client: &http.Client{},
-		Bduss:                     bduss}
+	return &ForumWorker{Cookie: http.Cookie{Name: "BDUSS", Value: bduss}, Client: &http.Client{}, Bduss: bduss}
 }
 
 // 配置请求的客户端
@@ -70,7 +67,7 @@ func (f ForumWorker) InitForumWorker() {
 
 // 获取tbs
 func (f ForumWorker) GetTbs() string {
-	r, _ := http.NewRequest(GET, TBS_URL, nil)
+	r, _ := http.NewRequest(GET, TBSURL, nil)
 	r.AddCookie(&f.Cookie)
 	resp, err := f.Client.Do(r)
 	if err != nil {
@@ -87,7 +84,7 @@ func (f ForumWorker) GetTbs() string {
 func (f ForumWorker) GetFid(kw string) string {
 	args := url.Values{}
 	args.Add("kw", kw)
-	r, _ := http.NewRequest(GET, FID_URL+"?"+args.Encode(), nil)
+	r, _ := http.NewRequest(GET, FIDURL+"?"+args.Encode(), nil)
 	r.AddCookie(&f.Cookie)
 	reply, err := f.Client.Do(r)
 	if err != nil {
@@ -96,16 +93,16 @@ func (f ForumWorker) GetFid(kw string) string {
 	defer reply.Body.Close()
 	data, _ := ioutil.ReadAll(reply.Body)
 	re, _ := regexp.Compile(`<input type="hidden" name="fid" value="(.*?)"/>`)
-	submatch := re.FindSubmatch(data)
-	if len(submatch) < 2 {
+	match := re.FindSubmatch(data)
+	if len(match) < 2 {
 		return "-1"
 	}
-	return string(submatch[1])
+	return string(match[1])
 }
 
 // 获取关注的所有的贴儿吧
-func (f ForumWorker) GetAllForums() []string {
-	r, _ := http.NewRequest(GET, I_LIKE_URL, nil)
+func (f ForumWorker) RetrieveForums() []string {
+	r, _ := http.NewRequest(GET, ILIKEURL, nil)
 	r.AddCookie(&f.Cookie)
 	reply, err := f.Client.Do(r)
 	if err != nil {
@@ -114,9 +111,9 @@ func (f ForumWorker) GetAllForums() []string {
 	defer reply.Body.Close()
 	data, _ := ioutil.ReadAll(reply.Body)
 	re, _ := regexp.Compile(`<a href=".*?kw=.*?">(.*?)</a>`)
-	submatch := re.FindAllSubmatch(data, -1)
-	ret := []string{}
-	for _, name := range submatch {
+	machs := re.FindAllSubmatch(data, -1)
+	var ret []string
+	for _, name := range machs {
 		if len(name) < 2 {
 			continue
 		}
@@ -127,7 +124,7 @@ func (f ForumWorker) GetAllForums() []string {
 
 // 签到一个贴吧
 func (f ForumWorker) signOne(kw, fid string, ch chan string) {
-	formDatas := url.Values{
+	formData := url.Values{
 		"BDUSS":           {f.Bduss},
 		"_client_id":      {"03-00-DA-59-05-00-72-96-06-00-01-00-04-00-4C-43-01-00-34-F4-02-00-BC-25-09-00-4E-36"},
 		"_client_type":    {"4"},
@@ -138,8 +135,8 @@ func (f ForumWorker) signOne(kw, fid string, ch chan string) {
 		"net_type":        {"3"},
 		"tbs":             {f.GetTbs()},
 	}
-	formDatas = f.encrypt(formDatas)
-	r, _ := http.NewRequest("POST", SIGN_URL, strings.NewReader(formDatas.Encode()))
+	formData = f.encrypt(formData)
+	r, _ := http.NewRequest("POST", SIGNURL, strings.NewReader(formData.Encode()))
 	r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	r.Header.Add("User-Agent", "Pkmm iPhone/1.0 BadApple/99.1")
 	r.AddCookie(&f.Cookie)
@@ -155,10 +152,10 @@ func (f ForumWorker) signOne(kw, fid string, ch chan string) {
 }
 
 // 规格化上传的数据
-func (f ForumWorker) encrypt(formDatas url.Values) url.Values {
-	var keys = make([]string, len(formDatas))
+func (f ForumWorker) encrypt(formData url.Values) url.Values {
+	var keys = make([]string, len(formData))
 	var i = 0
-	for k, _ := range formDatas {
+	for k, _ := range formData {
 		keys[i] = k
 		i++
 	}
@@ -167,15 +164,15 @@ func (f ForumWorker) encrypt(formDatas url.Values) url.Values {
 	for _, k := range keys {
 		enerypt.WriteString(k)
 		enerypt.WriteString("=")
-		enerypt.WriteString(formDatas.Get(k))
+		enerypt.WriteString(formData.Get(k))
 	}
 	enerypt.WriteString("tiebaclient!!!")
 	md5value := md5.New()
 	md5value.Write(enerypt.Bytes())
 	sign := hex.EncodeToString(md5value.Sum(nil))
 	sign = strings.ToUpper(sign)
-	formDatas.Set("sign", sign)
-	return formDatas
+	formData.Set("sign", sign)
+	return formData
 }
 
 // 签到所有贴吧，使用goroutines
