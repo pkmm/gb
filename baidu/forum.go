@@ -167,8 +167,7 @@ func (f ForumWorker) SignAll(needSignForums *ForumList) *map[string]string {
 	}
 	result := make(map[string]string, size)
 	for i := 0; i < size; i++ {
-		kw := <-localChannel
-		signResult := <-localChannel
+		kw, signResult := <-localChannel
 		result[kw] = signResult
 		fmt.Println(signResult)
 	}
