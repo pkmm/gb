@@ -1,15 +1,12 @@
 package main
 
 import (
-	"fmt"
-	"github.com/pkmm/gb/baidu"
+	"gb/baidu"
 )
 
 func main() {
-	//sample example
-	worker := baidu.NewForumWorker("your baidu bduss")
-	data := baidu.ForumList{}
-	data = append(data, baidu.Forum{"贴吧名称", "贴吧fid"})
-	ret := worker.SignAll(&data)
-	fmt.Print(*ret)
+	crawl, _ := baidu.NewBaiduTiebaCrawl("your bduss.")
+	crawl.RunAtDaily()
+	// 阻塞线程
+	select {}
 }

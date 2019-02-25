@@ -6,7 +6,6 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"errors"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/http/cookiejar"
@@ -33,12 +32,9 @@ type Tbs struct {
 	Tbs string
 }
 
-// 签到某一个贴吧需要的两个参数
-type Forum struct {
+type Tieba struct {
 	Kw, Fid string
 }
-
-type ForumList []Forum
 
 type Crawl struct {
 	client *http.Client
@@ -57,13 +53,13 @@ func NewBaiduTiebaCrawl(bduss string) (*Crawl, error) {
 		Timeout: timeout,
 		Jar:     cookieJar,
 	}
-	client.cookie = &http.Cookie{Name:"BDUSS", Value:bduss}
+	client.cookie = &http.Cookie{Name: "BDUSS", Value: bduss}
 	return client, nil
 }
 
 func (c *Crawl) SetBduss(bduss string) *Crawl {
 	c.bduss = bduss
-	c.cookie = &http.Cookie{Name:"BDUSS", Value:bduss}
+	c.cookie = &http.Cookie{Name: "BDUSS", Value: bduss}
 	return c
 }
 
@@ -90,15 +86,24 @@ func (c *Crawl) getTbs() string {
 func (c *Crawl) getFid(kw string) string {
 	args := url.Values{}
 	args.Add("kw", kw)
-	r, _ := http.NewRequest(GET, fidUrl+"?"+args.Encode(), nil)
+	r, err := http.NewRequest(GET, fidUrl+"?"+args.Encode(), nil)
+	if err != nil {
+		return "-1"
+	}
 	r.AddCookie(c.cookie)
 	reply, err := c.client.Do(r)
 	if err != nil {
 		return "-1"
 	}
 	defer reply.Body.Close()
-	data, _ := ioutil.ReadAll(reply.Body)
-	re, _ := regexp.Compile(`<input type="hidden" name="fid" value="(.*?)"/>`)
+	data, err := ioutil.ReadAll(reply.Body)
+	if err != nil {
+		return "-1"
+	}
+	re, err := regexp.Compile(`<input type="hidden" name="fid" value="(.*?)"/>`)
+	if err != nil {
+		return "-1"
+	}
 	match := re.FindSubmatch(data)
 	if len(match) < 2 {
 		return "-1"
@@ -106,18 +111,25 @@ func (c *Crawl) getFid(kw string) string {
 	return string(match[1])
 }
 
-
-// 获取关注的所有的贴儿吧
-func (c *Crawl) RetrieveForums() []string {
-	r, _ := http.NewRequest(GET, iLikeUrl, nil)
+func (c *Crawl) RetrieveTiebas() ([]string, error) {
+	r, err := http.NewRequest(GET, iLikeUrl, nil)
+	if err != nil {
+		return nil, err
+	}
 	r.AddCookie(c.cookie)
 	reply, err := c.client.Do(r)
 	if err != nil {
-		return []string{}
+		return nil, err
 	}
 	defer reply.Body.Close()
-	data, _ := ioutil.ReadAll(reply.Body)
-	re, _ := regexp.Compile(`<a href=".*?kw=.*?">(.*?)</a>`)
+	data, err := ioutil.ReadAll(reply.Body)
+	if err != nil {
+		return nil, err
+	}
+	re, err := regexp.Compile(`<a href=".*?kw=.*?">(.*?)</a>`)
+	if err != nil {
+		return nil, err
+	}
 	machs := re.FindAllSubmatch(data, -1)
 	var ret []string
 	for _, name := range machs {
@@ -126,11 +138,22 @@ func (c *Crawl) RetrieveForums() []string {
 		}
 		ret = append(ret, string(name[1]))
 	}
-	return ret
+	return ret, nil
+}
+
+type signResult struct {
+	kw   string // 签到的贴吧名称
+	resp string // 签到的响应结果
 }
 
 // 签到一个贴吧
-func (c *Crawl) signOne(kw, fid string, ch chan string) {
+// kw: 贴吧名称
+func (c *Crawl) signOne(kw string, ch chan signResult) {
+	fid := c.getFid(kw)
+	if fid == "-1" {
+		ch <- signResult{kw: kw, resp: ""}
+		return
+	}
 	formData := url.Values{
 		"BDUSS":           {c.bduss},
 		"_client_id":      {"03-00-DA-59-05-00-72-96-06-00-01-00-04-00-4C-43-01-00-34-F4-02-00-BC-25-09-00-4E-36"},
@@ -143,24 +166,43 @@ func (c *Crawl) signOne(kw, fid string, ch chan string) {
 		"tbs":             {c.getTbs()},
 	}
 	formData = c.encrypt(formData)
-	r, _ := http.NewRequest("POST", signUrl, strings.NewReader(formData.Encode()))
+	r, err := http.NewRequest("POST", signUrl, strings.NewReader(formData.Encode()))
+	if err != nil {
+		ch <- signResult{kw: kw, resp: ""}
+		return
+	}
 	r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	r.Header.Add("User-Agent", "Pkmm iPhone/1.0 BadApple/99.1")
 	r.AddCookie(c.cookie)
 	resp, err := c.client.Do(r)
 	if err != nil {
-		ch <- ""
-		ch <- ""
+		ch <- signResult{kw: kw, resp: ""}
 		return
 	}
 	defer resp.Body.Close()
-	body, _ := ioutil.ReadAll(resp.Body)
-
-	ch <- kw
-	ch <- string(body)
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		ch <- signResult{kw: kw, resp: ""}
+		return
+	}
+	ch <- signResult{kw: kw, resp: string(body)}
 }
 
-// 规格化上传的数据
+// 签到所有贴吧，使用goroutines
+func (c *Crawl) SignAll(tiebas []string) *map[string]string {
+	size := len(tiebas)
+	localChannel := make(chan signResult, size)
+	for _, tieba := range tiebas {
+		go c.signOne(tieba, localChannel)
+	}
+	result := make(map[string]string, size)
+	for i := 0; i < size; i++ {
+		ret := <-localChannel
+		result[ret.kw] = ret.resp
+	}
+	return &result
+}
+
 func (c *Crawl) encrypt(formData url.Values) url.Values {
 	var keys = make([]string, len(formData))
 	var i = 0
@@ -182,19 +224,26 @@ func (c *Crawl) encrypt(formData url.Values) url.Values {
 	return formData
 }
 
-// 签到所有贴吧，使用goroutines
-func (c *Crawl) SignAll(needSignForums *ForumList) *map[string]string {
-	size := len(*needSignForums)
-	localChannel := make(chan string, size<<1)
-	for _, forum := range *needSignForums {
-		go c.signOne(forum.Kw, forum.Fid, localChannel)
-	}
-	result := make(map[string]string, size)
-	for i := 0; i < size; i++ {
-		kw := <-localChannel
-		signResult := <-localChannel
-		result[kw] = signResult
-		fmt.Println(signResult)
-	}
-	return &result
+// 定时在每天凌晨执行(北京时间)
+func (c *Crawl) RunAtDaily() {
+	go func() {
+		for {
+			now := time.Now()
+			next := now.Add(time.Hour * 24)
+			next = time.Date(next.Year(), next.Month(), next.Day(), 0, 0, 0, 0, next.Location())
+			t := time.NewTicker(next.Sub(now))
+			<-t.C
+			retry := 3
+			for retry > 0 {
+				retry--
+				tiebas, err := c.RetrieveTiebas()
+				if err != nil {
+					//todo log
+					continue
+				}
+				c.SignAll(tiebas)
+				break
+			}
+		}
+	}()
 }
