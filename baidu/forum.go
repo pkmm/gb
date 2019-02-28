@@ -148,7 +148,7 @@ type signResult struct {
 
 // 签到一个贴吧
 // kw: 贴吧名称
-func (c *Crawl) signOne(kw string, ch chan signResult) {
+func (c *Crawl) signOne(kw string, ch chan<- signResult) {
 	fid := c.getFid(kw)
 	if fid == "-1" {
 		ch <- signResult{kw: kw, resp: ""}
@@ -190,14 +190,30 @@ func (c *Crawl) signOne(kw string, ch chan signResult) {
 
 // 签到所有贴吧，使用goroutines
 func (c *Crawl) SignAll(tiebas []string) *map[string]string {
+	goroutineCount := 20 // 最多开启20个线程
+	needSignTiebaChans := make(chan string, goroutineCount)
+
+	go func() {
+		for _, tieba := range tiebas {
+			needSignTiebaChans <- tieba
+		}
+		close(needSignTiebaChans)
+	}()
+
+	resultChans := make(chan signResult, goroutineCount)
+	go func() {
+		for {
+			tieba, ok := <-needSignTiebaChans
+			if !ok {
+				break
+			}
+			go c.signOne(tieba, resultChans)
+		}
+	}()
 	size := len(tiebas)
-	localChannel := make(chan signResult, size)
-	for _, tieba := range tiebas {
-		go c.signOne(tieba, localChannel)
-	}
 	result := make(map[string]string, size)
 	for i := 0; i < size; i++ {
-		ret := <-localChannel
+		ret := <-resultChans
 		result[ret.kw] = ret.resp
 	}
 	return &result
