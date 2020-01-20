@@ -1,7 +1,7 @@
 package main
 
 import (
-	"gb/baidu"
+	"github.com/pkmm/gb/baidu"
 )
 
 func main() {
