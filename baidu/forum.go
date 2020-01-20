@@ -16,6 +16,17 @@ import (
 	"time"
 )
 
+// 贴吧签到的结果
+// 成功的信息 失败的信息
+type tiebaSignInfo struct {
+	ErrorCode  string `json:"error_code"`
+	ErrorMsg   string `json:"error_msg"`
+	Time       int    `json:"time,omitempty"`
+	Ctime      int    `json:"ctime,omitempty"`
+	Logid      int    `json:"logid,omitempty"`
+	ServerTime string `json:"server_time,omitempty"`
+}
+
 const (
 	tbsUrl   = "http://tieba.baidu.com/dc/common/tbs"
 	fidUrl   = "http://tieba.baidu.com/mo/m"
@@ -189,7 +200,7 @@ func (c *Crawl) signOne(kw string, ch chan<- signResult) {
 }
 
 // 签到所有贴吧，使用goroutines
-func (c *Crawl) SignAll(tiebas []string) *map[string]string {
+func (c *Crawl) SignAll(tiebas []string) *map[string]tiebaSignInfo {
 	goroutineCount := 20 // 最多开启20个线程
 	needSignTiebaChans := make(chan string, goroutineCount)
 
@@ -211,10 +222,12 @@ func (c *Crawl) SignAll(tiebas []string) *map[string]string {
 		}
 	}()
 	size := len(tiebas)
-	result := make(map[string]string, size)
+	result := make(map[string]tiebaSignInfo, size)
 	for i := 0; i < size; i++ {
 		ret := <-resultChans
-		result[ret.kw] = ret.resp
+		t := tiebaSignInfo{}
+		json.Unmarshal([]byte(ret.resp), &t)
+		result[ret.kw] = t
 	}
 	return &result
 }
