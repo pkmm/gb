@@ -159,6 +159,45 @@ type signResult struct {
 
 // 签到一个贴吧
 // kw: 贴吧名称
+// 返回签到结果的json string | ""
+func (c *Crawl) SignOne(kw string) string {
+	fid := c.getFid(kw)
+	if fid == "-1" {
+		return ""
+	}
+	formData := url.Values{
+		"BDUSS":           {c.bduss},
+		"_client_id":      {"03-00-DA-59-05-00-72-96-06-00-01-00-04-00-4C-43-01-00-34-F4-02-00-BC-25-09-00-4E-36"},
+		"_client_type":    {"4"},
+		"_client_version": {"1.2.1.17"},
+		"_phone_imei":     {"540b43b59d21b7a4824e1fd31b08e9a6"},
+		"fid":             {fid},
+		"kw":              {kw},
+		"net_type":        {"3"},
+		"tbs":             {c.getTbs()},
+	}
+	formData = c.encrypt(formData)
+	r, err := http.NewRequest("POST", signUrl, strings.NewReader(formData.Encode()))
+	if err != nil {
+		return ""
+	}
+	r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	r.Header.Add("User-Agent", "Pkmm iPhone/1.0 BadApple/99.1")
+	r.AddCookie(c.cookie)
+	resp, err := c.client.Do(r)
+	if err != nil {
+		return ""
+	}
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return ""
+	}
+	return string(body)
+}
+
+// 签到一个贴吧
+// kw: 贴吧名称
 func (c *Crawl) signOne(kw string, ch chan<- signResult) {
 	fid := c.getFid(kw)
 	if fid == "-1" {
